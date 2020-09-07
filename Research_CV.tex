@@ -1,0 +1,470 @@
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%    
+%%
+
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+
+% The automated optical recognition software used to digitize resume
+% information works best with fonts that do not have serifs. This
+% command uses a sans serif font throughout. Uncomment both lines (or at
+% least the second) to restore a Roman font (i.e., a font with serifs).
+%\usepackage{times}
+%\renewcommand{\familydefault}{\sfdefault}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+\usepackage{comment}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+% For "lorem ipsum" text
+\usepackage[english]{babel}
+\usepackage{lipsum}
+\usepackage{multicol}
+\usepackage{pifont}
+\usepackage{fontawesome}
+\usepackage{etaremune}
+% Simpler bibsection for CV sections
+% (thanks to natbib for inspiration)
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em} %1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newenvironment{bibsection}%
+        {\begin{enumerate}{}{%
+%        {\begin{list}{}{%
+       \setlength{\leftmargin}{\bibhang}%
+       \setlength{\itemindent}{-\leftmargin}%
+       \setlength{\itemsep}{\bibsep}%
+       \setlength{\parsep}{\z@}%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{enumerate}\vspace{-.6\baselineskip}}
+%        {\end{list}\vspace{-.6\baselineskip}}
+\makeatother
+
+% Layout: Puts the section titles on left side of page
+% \reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+%\usepackage[paper=letterpaper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=1.2in,     % Length of section titles
+%            marginparsep=.05in,       % Space between titles and text
+%            margin=1in,               % 1 inch margins
+%            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+% \usepackage[paper=a4paper,
+%             %includefoot, % Uncomment to put page number above margin
+%             marginparwidth=27.5mm,    % Length of section titles
+%             marginparsep=1.5mm,       % Space between titles and text
+%             margin=18mm,              % 25mm margins
+%             includemp]{geometry}
+
+\usepackage[paper=a4paper,
+            includefoot, % Uncomment to put page number above margin
+            marginparwidth=0mm,    % Length of section titles
+            marginparsep=0mm,       % Space between titles and text
+            margin=10mm,              % 25mm margins
+            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+\usepackage[shortlabels]{enumitem}
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+% \pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The title (name) with a horizontal rule under it
+% (optional argument typesets an object right-justified across from name
+%  as well)
+%
+% Usage: \makeheading{name}
+%        OR
+%        \makeheading[right_object]{name}
+%
+% Place at top of document. It should be the first thing.
+% If ``right_object'' is provided in the square-braced optional
+% argument, it will be right justified on the same line as ``name'' at
+% the top of the CV. For example:
+%
+%       \makeheading[\emph{Curriculum vitae}]{Your Name}
+%
+% will put an emphasized ``Curriculum vitae'' at the top of the document
+% as a title. Likewise, a picture could be included:
+%
+%   \makeheading[\includegraphics[height=1.5in]{my_picutre}]{Your Name}
+%
+% the picture will be flush right across from the name.
+\newcommand{\makeheading}[2][]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+             {\large \bfseries #2 \hfill #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+% \newcommand{\makeheading}[2][]%
+%         {#1 \hfill #2}
+
+% The section headings
+%
+% Usage: \section{section name}
+% \renewcommand{\section}[1]{\pagebreak[3]%
+%     \hyphenpenalty=10000%
+%     \vspace{1.3\baselineskip}%
+%     \phantomsection\addcontentsline{toc}{section}{#1}%
+%     \noindent\llap{\scshape\smash{\parbox[t]{\marginparwidth}{\raggedright #1}}}%
+%     \vspace{-\baselineskip}\par}
+
+    
+\renewcommand{\section}[1]{
+\bigskip
+  \begin{Large}
+  {\textsc{\textbf{#1}}}
+  \end{Large}
+  \hrulefill
+  \medskip
+  \\
+}
+
+% An itemize-style list with lots of space between items
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1,leftmargin=*]}{\end{itemize}%
+         \vspace{-.6\baselineskip}}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+        {\begin{list}{#1}{%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+
+% An itemize-style list with little space between items
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt]}
+        {\end{itemize}}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{loneinnerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt]}
+        {\end{itemize}\vspace{-.6\baselineskip}}
+
+        
+% An itemize-style list with medium space between items
+\newenvironment{midlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1,leftmargin=*,parsep=0pt,itemsep=4pt,topsep=0pt,partopsep=0pt]}
+        {\end{itemize}}
+        
+% An environment IDENTICAL to midlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonemidlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1,leftmargin=*,parsep=0pt,itemsep=4pt,topsep=0pt,partopsep=0pt]}
+        {\end{itemize}\vspace{-.6\baselineskip}}
+
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[3]}
+\newcommand{\halfblankline}{\quad\vspace{-0.5\baselineskip}\pagebreak[3]}
+
+% Uses hyperref to link DOI
+\newcommand\doilink[1]{\href{http://dx.doi.org/#1}{#1}}
+\newcommand\doi[1]{doi:\doilink{#1}}
+
+% For \url{SOME_URL}, links SOME_URL to the url SOME_URL
+\providecommand*\url[1]{\href{#1}{#1}}
+% Same as above, but pretty-prints SOME_URL in teletype fixed-width font
+\renewcommand*\url[1]{\href{#1}{\texttt{#1}}}
+
+% For \email{ADDRESS}, links ADDRESS to the url mailto:ADDRESS
+\providecommand*\email[1]{\href{mailto:#1}{#1}}
+% Same as above, but pretty-prints ADDRESS in teletype fixed-width font
+%\renewcommand*\email[1]{\href{mailto:#1}{\texttt{#1}}}
+
+%\providecommand\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+%    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+%\providecommand\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+%    \TeX}}
+\providecommand\BibTeX{{B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    \TeX}}
+\providecommand\Matlab{\textsc{Matlab}}
+\newcommand{\homepage}{https://homes.cs.washington.edu/~kusupati}
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{LARGE}
+\textbf{Aditya Kusupati}
+\end{LARGE}
+\smallskip\\
+Bill \& Melinda Gates Center for Computer Science \& Engineering\hfill \faEnvelope~\email{kusupati@cs.washington.edu}\\
+Paul G. Allen School of Computer Science \& Engineering\hfill \faHome~\href{\homepage}{adityakusupati.com}\\
+University of Washington, Seattle, WA, 
+USA 98195 \hfill  \faGraduationCap~\href{https://scholar.google.co.in/citations?user=qULx8g8AAAAJ&hl=en}{Google Scholar}
+
+\section{Education}
+\textbf{University of Washington, Seattle} \hfill {\textit{2019 - present}}\\
+\emph{PhD student in Computer Science and Engineering}\\%\hfill{GPA: 4.0/4.0}
+        Advisors: \href{https://homes.cs.washington.edu/~ali/}{Prof. Ali Farhadi} \& \href{https://homes.cs.washington.edu/~sham/}{Prof. Sham Kakade}\\
+
+\textbf{Indian Institute of Technology Bombay} \hfill {\textit{2013 - 2017}}\\
+\emph{B.Tech (Honours) in Computer Science and Engineering with Minor in Electrical Engineering}\\%\hfill{GPA: 8.63/10}
+        Advisor: \href{http://www.cse.iitb.ac.in/~soumen/}{Prof. Soumen Chakrabarti}
+        
+\section{Work Experience}
+\textbf{NVIDIA Toronto AI Lab} \hfill {\textit{June - September, 2020}}\\
+\emph{Research Scientist Intern}\\
+        Advisors: \href{http://www.cs.utoronto.ca/~fidler/}{Prof. Sanja Fidler} \& \href{http://web.mit.edu/torralba/www/}{Prof. Antonio Torralba}\\
+        
+\textbf{Microsoft Research India} \hfill {\textit{2017 - 2019}}\\
+\emph{Research Fellow in Machine Learning and Optimization Group}\\
+        Advisors: \href{http://manikvarma.org}{Dr. Manik Varma} \& \href{http://prateekjain.org}{Dr. Prateek Jain}
+
+\section{Publications}
+\label{sec:pubs}
+\textbf{\large{Preprints}}\hfill\begin{footnotesize}{* - equal contribution}\end{footnotesize}
+\begin{etaremune}
+\item \href{\homepage/pubs/wallingford20.pdf}{\textbf{In the Wild: From ML Models to Pragmatic ML Systems.}}\\
+Matthew Wallingford, \textbf{Aditya Kusupati}*, Keivan Alizadeh-Vahid*, Aaron Walsman, \\Aniruddha Kembhavi and Ali Farhadi.\\
+\emph{arXiv:2007.02519 (under review), 2020}.
+\end{etaremune}
+
+\textbf{\large{Conference Publications}}
+\begin{etaremune}
+\item \href{\homepage/pubs/saha20.pdf}{\textbf{RNNPool: Efficient Non-linear Pooling for RAM Constrained Inference.}}\\
+Oindrila Saha, \textbf{Aditya Kusupati}, Harsha Vardhan Simhadri, Manik Varma and Prateek Jain.\\
+\emph{Neural Information Processing Systems (\textbf{NeurIPS}), 2020}\\
+\emph{WiCV workshop @ CVPR, 2020}.
+
+\item \href{\homepage/pubs/kusupati20.pdf}{\textbf{Soft Threshold Weight Reparameterization for Learnable Sparsity}}.\\
+\textbf{Aditya Kusupati}, Vivek Ramanujan*, Raghav Somani*, Mitchell Wortsman*,\\ Prateek Jain, Sham Kakade and Ali Farhadi.\\
+\emph{International Conference on Machine Learning (\textbf{ICML}), 2020} \textbf{(Virtual Talk)}.
+
+\item \href{\homepage/pubs/prabhu20.pdf}{\textbf{Extreme Regression for Dynamic Search Advertising}}.\\
+Yashoteja Prabhu, \textbf{Aditya Kusupati}, Nilesh Gupta and Manik Varma.\\
+\emph{International Conference on Web Search and Data Mining (\textbf{WSDM}), 2020} \textbf{(Long Oral)}.\\
+\emph{Workshop on eXtreme Classification: Theory and Applications @ ICML, 2020}.
+
+\item \href{\homepage/pubs/roy19.pdf}{\textbf{One Size Does Not Fit All: Multi-Scale, Cascaded RNNs for Radar Classification}}.\\
+Dhrubojyoti Roy*, Sangeeta Srivatsava*, \textbf{Aditya Kusupati}, Pranshu Jain, Manik Varma and Anish Arora.\\
+\emph{International Conference on Systems for Energy-Efficient Buildings, Cities, and Transportation (\textbf{BuildSys}), 2019}.\\
+\faTrophy \textcolor{black}{~\textbf{Best Paper Runner-Up Award}.}\\
+\emph{Invited Paper in ACM Transactions on Sensor Networks (\textbf{TOSN}) - under review}.
+
+
+\item \href{\homepage/pubs/kusupati18.pdf}{\textbf{FastGRNN: A Fast, Accurate, Stable and Tiny Kilobyte Sized Gated Recurrent Neural Network}}.\\
+\textbf{Aditya Kusupati}, Manish Singh, Kush Bhatia, Ashish Kumar, Prateek Jain and Manik Varma.\\
+\emph{Neural Information Processing Systems (\textbf{NeurIPS}), 2018}.
+\end{etaremune}
+
+\textbf{\large{Technical Reports}}
+\begin{etaremune}[]
+\item \href{\homepage/pubs/kusupati20a.pdf}{\textbf{Adapting Unstructured Sparsity Techniques for Structured Sparsity}}.\\
+\textbf{Aditya Kusupati}.\\
+\emph{Technical Report, Paul G. Allen School of Computer Science and Engineering, University of Washington, 2020}.
+\end{etaremune}
+\clearpage
+\textbf{\large{Demos}}
+\begin{etaremune}[]
+\item \href{\homepage/pubs/roy19-demo.pdf}{\textbf{Lightweight, Deep RNNs for Radar Classification}}.\\
+Dhrubojyoti Roy*, Sangeeta Srivatsava*, Pranshu Jain, \textbf{Aditya Kusupati}, Manik Varma and Anish Arora.\\
+\emph{International Conference on Systems for Energy-Efficient Buildings, Cities, and Transportation (\textbf{BuildSys}), 2019}.
+\end{etaremune}
+
+\textbf{\large{Theses}}
+\begin{etaremune}
+\item \href{\homepage/pubs/kusupati17.pdf}{\textbf{Efficient Spatial Representation for Entity-Typing}}.\\
+Anand Dhoot*, \textbf{Aditya Kusupati}* and Soumen Chakrabarti.\\
+\textit{Undergraduate Thesis, Computer Science and Engineering, IIT Bombay, 2016 - 17}.
+\end{etaremune}
+
+\section{Software}
+\label{sec:soft}
+\vspace{-5mm}
+\begin{enumerate}
+    \item \href{https://github.com/microsoft/EdgeML}{\textbf{EdgeML: Machine Learning for resource-constrained edge devices}}.\\
+    Don Kurian Dennis, Yash Gaurkar, Sridhar Gopinath, Sachin Goyal, Chirag Gupta, Moksh Jain, Ashish Kumar, \textbf{Aditya Kusupati}, Chris Lovett, Shishir Girish Patil, Oindrila Saha and Harsha Vardhan Simhadri.\\
+    \textit{Microsoft Research India, 2017 - present.}\\
+     Stats as of August 2020: \ding{72} 884, ~\faCodeFork ~242, ~\faEye ~\textgreater175,000, ~\faClone ~\textgreater2,700.
+\end{enumerate}
+
+\section{Selected Awards and Honors}
+\vspace{-3mm}
+\begin{midlist}
+\item University of Washington graduate and CSE student conference grants to attend \textbf{WSDM '20}\hfill{\textit{2020}}
+\item \textbf{Best Paper Runner-Up Award} at \textbf{BuildSys '19}\hfill{\textit{2019}}
+\item \textbf{Best reviewer} (top 400) award for \textbf{NeurIPS '19}\hfill{\textit{2019}}
+\item Young Researcher at Heidelberg Laureate Forum (\textbf{HLF '19}) with Romberg Grant \& MSR Travel Grant\hfill{\textit{2019}}
+\item \textbf{Facebook AI Research International Scholarship} for DPhil at VGG, Oxford (2019 - 22, declined)\hfill{\textit{2019}}
+\item IIT Bombay CSE \textbf{Teaching Assistant of the month} (Feb '16 and Feb '17) award\hfill{\textit{2016 - 2017}}
+\item \textbf{All India Rank 44} in JEE Advanced (IIT-JEE) 2013 among 150,000 candidates \hfill{\textit{2013}}
+\item  Gold Medal and rank \textbf{6 out of top 40} in India at OCSC for International Chemistry Olympiad '13 \hfill{\textit{2013}}
+\item Awarded KVPY Fellowship from Government of India - All India Rank 22.\hfill{\textit{2011}}
+\item Awarded NTSE Scholarship from Government of India. \hfill{\textit{2008}}
+\end{midlist}
+
+
+\section{Talks}
+\vspace{-3mm}
+\begin{lonemidlist}
+\item\textbf{Soft Threshold Weight Reparameterization for Learnable Sparsity}
+\begin{itemize}
+    \item International Conference on Machine Learning (ICML)\hfill{\textit{July 2020}}
+    \item NVIDIA Research\hfill{\textit{July 2020}} 
+    \item Deep Learning: Classics and Trends\hfill{\textit{June 2020}}
+\end{itemize}
+\item\textbf{The Edge of Machine Learning}
+\begin{itemize}
+     \item University of Washington CSE Colloquium \&  Sensor Systems Seminar\hfill{\textit{October 2019}}
+     \item VGG @ Oxford University, UK\hfill{\textit{April 2019}}
+     \item Microsoft Research Redmond\hfill{\textit{March 2019}}
+     \item Microsoft Research India\hfill{\textit{August 2018}}
+\end{itemize}
+\item\textbf{The Extremes of Machine Learning}
+\begin{itemize}
+     \item Microsoft Bing Bellevue\hfill{\textit{March 2019}}
+\end{itemize}
+\end{lonemidlist}
+
+
+\section{Professional Responsibilities}
+\vspace{-3mm}
+\begin{lonemidlist}
+\item \emph{Reviewing:} IEEE TPAMI, NeurIPS ({2019 - present}), ICML ({2020 - present}), ICLR ({2021 - present}).
+
+\item \emph{Mentorship}
+\begin{itemize}
+    \item Students
+        \begin{itemize}
+            \item Manish Singh\\Bachelor's Thesis, IIT Delhi (w\textbackslash{} Dr. Manik Varma) $\to$ PhD Student @ MIT EECS\hfill\textit{2017 - 18}
+            \item Sheshansh Agrawal\\Bachelor's Thesis, IIT Bombay (w\textbackslash{} Prof. Soumen Chakrabarti) $\to$ RSDE @ MSR India\hfill\textit{2018 - 19}
+            \item Sahil Bhatia\\Research Fellow, MSR India (w\textbackslash{} Dr. Prateek Jain) $\to$ PhD Student @ UC Berkeley EECS \hfill\textit{2018 - 20}
+            \item Oindrila Saha\\Research Fellow, MSR India (w\textbackslash{} Dr. Prateek Jain)\hfill\textit{2019 -}
+            \item Sachin Goyal\\Research Fellow, MSR India (w\textbackslash{} Dr. Prateek Jain)\hfill\textit{2019 -}
+        \end{itemize}
+    \item New In ML 2019 session @ NeurIPS '19\hfill \textit{2019}
+    \item MSR India Summer Workshop 2018: Machine Learning on Constrained Devices \hfill \textit{Summer 2018}
+\end{itemize}
+
+\item \textit{Undergraduate Teaching Assistantship} - Computer Science and Engineering, IIT Bombay
+  
+  \begin{itemize}
+        \item Digital Logic Design - \textit{Prof. Supratik Chakraborty} - \textbf{TA of the month, Feb '17}\hfill{\textit{Spring 2017}}
+        \item Software Systems Lab - \textit{Prof. Sharat Chandran} \hfill{\textit{Autumn 2016}}
+        \item Digital Logic Design - \textit{Prof. Supratik Chakraborty} - \textbf{TA of the month, Feb '16}\hfill{\textit{Spring 2016}}
+        \item Computer Programming and Utilisation - \textit{Prof. Varsha Apte}\hfill{\textit{Autumn 2015}}
+        \item Computer Programming and Utilisation - \textit{Prof. Kavi Arya}\hfill{\textit{Spring 2015}}
+           
+  \end{itemize}
+  \item \textit{Faculty Recruiting Liason} - Paul G. Allen School of CSE, University of Washington \hfill{\textit{2020 - 2021}}
+  \item \textit{Department General Secretary} - Computer Science and Engineering, IIT Bombay\hfill{\textit{2016 - 2017}}
+
+
+\end{lonemidlist}
+
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%, .
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
