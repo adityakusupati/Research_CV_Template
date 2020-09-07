@@ -3,4 +3,4 @@ A clean and crisp CV template built over time by [Aditya Kusupati](www.adityakus
 
 Works seamlessly in online LaTeX editors just by uploading the tex/zip file or can be compiled using the Makefile which only needs pdflatex.
 
-Anyone can use this template for non-commercial use: which basically covers most of the cases we use our CVs.
+Anyone can use this template for non-commercial use: which basically covers most cases we use our CVs for.
