@@ -1,7 +1,7 @@
-all: AdityaKusupati_Research_CV
+all: Research_CV
 
-AdityaKusupati_Research_CV: AdityaKusupati_Research_CV.tex
-	pdflatex AdityaKusupati_Research_CV.tex
+AdityaKusupati_Research_CV: Research_CV.tex
+	pdflatex Research_CV.tex
 
 clean: 
 	rm -rf *.pdf *.aux *.out *.log
