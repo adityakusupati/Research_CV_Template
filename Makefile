@@ -1,6 +1,6 @@
 all: Research_CV
 
-AdityaKusupati_Research_CV: Research_CV.tex
+Research_CV: Research_CV.tex
 	pdflatex Research_CV.tex
 
 clean: 
